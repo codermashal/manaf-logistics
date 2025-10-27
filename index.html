@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Manaf Logistic Company</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    .gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.gallery img {
+  width: 100%;
+  aspect-ratio: 16/10; /* يجعل جميع الصور متساوية النسبة */
+  object-fit: cover;   /* يملأ الصورة بالكامل دون تمدد */
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+@media (max-width: 900px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========== Tokens / Variables ========== */
+:root{
+  /* Hero backgrounds */
+  --hero-desktop: url("images/manaf_banner.jpg");
+  --hero-mobile:  url("images/manaf_banner.jpg");
+
+  /* Brand & effects */
+  --brand-orange:#d91f26;
+  --brand-blue:#0A3265;
+  --ink:#161a23;
+  --bg:#ffffff;
+  --muted:#5d6470;
+  --dark:#0b1c3a;
+  --ring: 0 10px 30px rgba(0,0,0,.18);
+  --ring-strong: 0 20px 45px rgba(0,0,0,.25);
+
+  --max:1200px;
+}
+
+/* ========== Base / Resets ========== */
+*{box-sizing:border-box}
+html,body{height:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  line-height:1.5;
+}
+h1,h2,h3{margin:0 0 12px}
+p{margin:0 0 12px; color:var(--muted)}
+.container{max-width:var(--max); margin:auto; padding:0 20px}
+.section{padding:80px 0}
+.grid{display:grid; gap:28px}
+.badge{display:inline-block; font-size:13px; color:#fff; background:rgba(0,0,0,.45); padding:6px 10px; border-radius:6px; backdrop-filter:blur(3px)}
+.btn{display:inline-block; padding:12px 20px; border-radius:8px; text-decoration:none; font-weight:600}
+.btn-primary{background:var(--brand-orange); color:#fff}
+.title{font-size:56px; line-height:1.05; font-weight:800; letter-spacing:.2px; margin:12px 0 16px}
+.title .brand{color:var(--brand-orange)}
+.lead{max-width:700px; color:#e9eef6}
+
+/* ========== Topbar / Nav ========== */
+.topbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 70;
+  background: #718391;
+  backdrop-filter: saturate(140%) blur(6px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.nav{display:flex; align-items:center; gap:18px; padding:10px 0}
+.logo{display:flex; align-items:center; gap:10px}
+.logo img{height:40px; width:auto}
+.menu{display:flex; gap:26px; margin-left:10px}
+.menu a{color:#fff; text-decoration:none; font-weight:600; padding:10px 2px; position:relative}
+.menu a.active::after{content:""; position:absolute; left:0; right:0; bottom:0; height:3px; background:#fff; border-radius:6px}
+.search{margin-left:auto; position:relative; width:320px; max-width:40vw}
+.search input{width:100%; height:42px; border-radius:22px; border:0; outline:0; padding:0 44px 0 14px; background:rgba(255,255,255,.95); color:#333}
+.search button{position:absolute; right:6px; top:50%; translate:0 -50%; width:34px; height:34px; border-radius:50%; border:0; background:rgba(0,0,0,.08); cursor:pointer}
+
+/* Hamburger (mobile) */
+.burger{display:none; margin-left:auto; background:transparent; border:0; cursor:pointer}
+.burger svg{width:28px; height:28px; color:#fff}
+@media (max-width:900px){
+  .search{display:none}
+  .menu{
+    position:fixed; inset:60px 16px auto 16px;
+    background:rgba(0,0,0,.9); border-radius:12px; padding:12px 10px;
+    display:none; flex-direction:column; gap:6px; z-index:80
+  }
+  .menu a{padding:12px 10px; border-radius:8px}
+  .menu a.active::after{display:none}
+  .menu.open{display:flex}
+  .burger{display:block}
+}
+
+/* ========== HERO (Banner) ========== */
+.hero{
+  position:relative; min-height:92vh; display:flex; align-items:center; color:#fff;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.50)),
+    var(--hero-desktop) center/cover no-repeat;
+}
+@media (max-width:720px){
+  .hero{
+    background:
+      linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.55)),
+      var(--hero-mobile) center/cover no-repeat;
+  }
+}
+.hero .container{position:relative; z-index:2; padding-top:110px}
+/* إذا عندك watermark قديمة، خفّفها أو احذفها */
+.watermark{position:absolute; inset:0; z-index:1; display:grid; place-items:center; pointer-events:none; opacity:.14}
+
+/* ========== ABOUT ========== */
+.about .grid{grid-template-columns:1.2fr .8fr; align-items:center}
+.about .media{position:relative; border-radius:14px; overflow:hidden; box-shadow:var(--ring)}
+.about .media img{width:100%; display:block}
+.about .media .accent{position:absolute; right:-16px; top:24px; width:90px; height:140px; background:var(--brand-orange)}
+.about h2{font-size:32px}
+.about p{max-width:560px}
+
+/* ======= SERVICES (new) ======= */
+
+/* شريط الخلفية بالحاويات */
+.services-stripe{
+  background: linear-gradient(to right, rgba(10,25,55,.25), rgba(10,25,55,.35)),
+              url("images/Background.jpg") center/cover no-repeat; /* ← صورة الشريط */
+  min-height: 300px;
+}
+
+/* الكرت الأبيض العائم فوق الشريط */
+.srv-card{
+  position: relative;
+  z-index: 2;
+  margin-top: -120px;            /* يرفع الكرت للأعلى ليتداخل مع الشريط */
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: var(--ring-strong);
+  padding: 36px 34px;
+}
+
+/* تخطيط عام للكرت: نص يسار + صور يمين */
+.srv-grid{
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 28px;
+  align-items: center;
+}
+
+/* النص */
+.srv-copy h2{ font-size: 30px; margin-bottom: 10px; color: var(--ink); }
+.srv-copy p{ color: #5d6470; }
+
+/* مجموعة الصور المتداخلة */
+.srv-photos{ position: relative; min-height: 320px; }
+.photo{ margin: 0; }
+.photo img{
+  width: 100%; height: auto; display: block; border-radius: 10px;
+  box-shadow: 0 12px 28px rgba(0,0,0,.18);
+}
+
+/* الصورة الكبيرة (أعلى يمين) */
+.photo-main{
+  width: 72%;
+  justify-self: end;
+  margin-left: auto;
+}
+
+/* الصورة الصغيرة متداخلة أسفل يسار الكبيرة مع إطار أبيض */
+.photo-mini{
+  position: absolute;
+  width: 48%;
+  left: -18px;                   /* يُظهرها خارج حدود النص قليلاً */
+  bottom: -26px;
+  background: #fff;              /* إطار أبيض حول الصورة */
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(0,0,0,.2);
+}
+.photo-mini img{ border-radius: 8px; }
+
+/* استجابة */
+@media (max-width:1024px){
+  .srv-grid{ grid-template-columns: 1fr; }
+  .srv-photos{ min-height: 260px; margin-top: 10px; }
+  .photo-main{ width: 86%; }
+  .photo-mini{ width: 56%; left: -10px; bottom: -18px; }
+}
+@media (max-width:640px){
+  .srv-card{ padding: 26px 22px; margin-top: -90px; }
+  .srv-photos{ min-height: 220px; }
+  .photo-main{ width: 92%; }
+  .photo-mini{ width: 64%; left: -8px; bottom: -14px; padding: 8px; }
+}
+
+
+/* ========== WHY CHOOSE US ========== */
+.why .wrapper{display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:center}
+.why-visual{position:relative; border-radius:14px; overflow:hidden; box-shadow:var(--ring-strong)}
+.why-visual img{width:100%; display:block}
+.why-visual .tag{position:absolute; left:24px; bottom:24px; background:var(--brand-orange); color:#fff; padding:12px 16px; border-radius:8px; font-weight:600; box-shadow:var(--ring)}
+.why-box{background:linear-gradient(to right,#eef2f7,#f6f8fb); border-radius:14px; padding:28px}
+.why h2{margin-bottom:12px}
+.bullets{display:grid; gap:16px; margin-top:12px}
+.bullet{display:grid; grid-template-columns:44px 1fr; gap:14px; align-items:start}
+.icon{width:44px; height:44px; border-radius:50%; display:grid; place-items:center; background:#fff; color:var(--brand-orange); box-shadow:var(--ring)}
+
+/* ========== TESTIMONIALS ========== */
+.testimonials h2{margin-bottom:18px}
+.t-row{display:grid; grid-template-columns:1fr 1fr; gap:24px}
+.t-card{background:#fff; border-radius:14px; padding:22px; box-shadow:var(--ring); border:1px solid #eef1f6}
+.t-head{display:flex; align-items:center; gap:12px; margin-bottom:8px}
+.t-head img{width:44px; height:44px; border-radius:50%; object-fit:cover}
+.t-name{font-weight:700}
+.t-role{color:var(--muted); font-size:13px}
+.stars{color:#FFB545; letter-spacing:2px; margin-top:8px}
+
+/* ========== CONTACT ========== */
+.contact{background:var(--dark); color:#cdd6e6}
+.contact .grid{grid-template-columns:.9fr 1.1fr; gap:28px}
+.contact h3{color:#fff}
+.info{display:grid; gap:14px; margin-top:10px}
+.info .row{display:flex; gap:10px; align-items:flex-start}
+.info .dot{width:36px; height:36px; border-radius:50%; display:grid; place-items:center; background:rgba(255,255,255,.08)}
+.form{display:grid; gap:12px; margin-top:10px}
+.form .two{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.input,.textarea{width:100%; border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); color:#fff; padding:12px 14px; border-radius:8px; outline:0}
+.textarea{min-height:140px; resize:vertical}
+.form .btn-primary{justify-self:start}
+
+/* ========== FOOTER ========== */
+footer{
+  color:#e9eef6; background:#111;
+  background-image:linear-gradient(to bottom,rgba(0,0,0,.6),rgba(0,0,0,.8)), url("images/footer-bg.jpg");
+  background-size:cover; background-position:center;
+}
+.footer-hero{padding:80px 0 30px; text-align:center}
+.footer-hero h2{color:#fff; font-size:46px}
+.footer-main{background:rgba(0,0,0,.55); padding:28px 0}
+.f-grid{display:grid; grid-template-columns:1.2fr .8fr .8fr .9fr; gap:22px}
+.f-col h4{margin-bottom:10px; color:#fff}
+.f-col a{display:block; color:#cdd6e6; text-decoration:none; margin:6px 0}
+.f-subscribe input{width:100%; padding:12px 14px; border-radius:8px; border:0; margin-bottom:10px}
+.f-subscribe .btn-primary{width:100%; text-align:center}
+.f-bottom{text-align:center; padding:14px 0; color:#98a6c7; border-top:1px solid rgba(255,255,255,.12)}
+
+/* ========== Responsive ========== */
+@media (max-width:1024px){
+  .about .grid{grid-template-columns:1fr}
+  .panel .cols{grid-template-columns:1fr}
+  .why .wrapper{grid-template-columns:1fr}
+  .t-row{grid-template-columns:1fr}
+  .contact .grid{grid-template-columns:1fr}
+  .f-grid{grid-template-columns:1fr 1fr}
+  .title{font-size:44px}
+}
+@media (max-width:720px){
+  .title{font-size:34px}
+  .footer-hero h2{font-size:32px}
+}
+</style>
+
+</head>
+<body>
+
+<!-- NAV -->
+<header class="topbar">
+  <div class="container nav">
+    <a class="logo" href="#home"><img src="images/Manaf.png" alt="Manaf Logistic"></a>
+
+    <button class="burger" aria-label="Open menu" id="burgerBtn">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+
+    <nav class="menu" id="primaryMenu" aria-label="Primary">
+      <a href="#services">Our Services</a>
+      <a href="#contact">Contact Us</a>
+      <a href="#about">About Us</a>
+    </nav>
+
+    <form class="search" role="search">
+      <input type="search" placeholder="Let us help you!" aria-label="Search">
+      <button type="submit" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.3-4.3m1.3-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="#333" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </form>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="home" class="hero" role="img" aria-label="Logistics hero banner">
+  <div class="container">
+    <span class="badge">Logistics &amp; Shipping Services</span>
+    <h1 class="title">Welcome to <span class="brand">Manaf</span> Logistic<br>Company</h1>
+    <p class="lead">
+      In augue ligula, feugiat ut nulla consequat. Ut est lacus, molestie in arcu no, iaculis vehicula ipsum.
+      Nunc faucibus, nisl id dapibus finibus, enim diam interdum nulla, sed laoreet risus lectus.
+    </p>
+  </div>
+</section>
+
+
+<!-- ABOUT -->
+<section id="about" class="section about">
+  <div class="container grid">
+    <div>
+      <h2>About Us</h2>
+      <p>At Manaf Logistics, we move more than just shipments — we move businesses forward. Founded with a vision to redefine logistics, Manaf has become a trusted name in smart, reliable, and efficient supply chain solutions.</p>
+    </div>
+    <div class="media">
+      <img src="images/Photo.jpg" alt="About - ship at port">
+      <span class="accent" aria-hidden="true"></span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES (new) -->
+<div class="services-wrap">
+  <!-- شريط خلفية بالحاويات -->
+  <div class="services-stripe" aria-hidden="true"></div>
+
+  <!-- الكرت الأبيض العائم -->
+  <section id="services" class="section">
+    <div class="container">
+      <div class="srv-card">
+        <div class="srv-grid">
+          <!-- النص -->
+          <div class="srv-copy">
+            <h2>Our Services</h2>
+            <p>we deliver fast, secure, and reliable logistics solutions — from shipping and storage to delivery and real-time tracking.</p>
+            <p><strong>Our specialized subcategories</strong></p>
+            <p>we offer tailored solutions for e-commerce, cold chain, oversized shipments, and high-value goods — all delivered with precision and care.</p>
+          </div>
+
+          <!-- الصور المتداخلة -->
+          <div class="srv-photos">
+            <figure class="photo photo-main">
+              <img src="images/Image.jpg" alt="Containers top view">
+            </figure>
+            <figure class="photo photo-mini">
+              <img src="images/67868542d3.jpg" alt="Staff with parcel">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- WHY CHOOSE US -->
+<section id="why" class="section why">
+  <div class="container wrapper">
+    <div class="why-visual">
+      <img src="images/ship.jpg" alt="Top view of container ship">
+      <span class="tag">Moving your products across borders</span>
+    </div>
+    <div class="why-box">
+      <h2>Why Choose Us</h2>
+      <p>At <strong>Manaf Logistics</strong>, we combine experience, efficiency, and innovation to ensure your cargo reaches its destination safely and on time — every time.</p>
+      <div class="bullets">
+        <div class="bullet"><div class="icon">🛡️</div><div><h3 style="margin:0 0 4px">Safe Package</h3><p>Secure, damage-free delivery backed by a proven operations track record.</p></div></div>
+        <div class="bullet"><div class="icon">✅</div><div><h3 style="margin:0 0 4px">Reliability</h3><p>Dedicated team, precise workflows, and timely arrival every time.</p></div></div>
+        <div class="bullet"><div class="icon">🌍</div><div><h3 style="margin:0 0 4px">Global Reach</h3><p>From local markets to international routes, scalable solutions that keep your business ahead.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="section testimonials">
+  <div class="container">
+    <h2>What Our Customer Say</h2>
+    <div class="t-row">
+      <article class="t-card">
+        <div class="t-head">
+          <img src="images/ava-1.jpg" alt="Mohammed Sulami">
+          <div><div class="t-name">Mohammed Sulami</div><div class="t-role">Marketing Manager</div></div>
+        </div>
+        <p>Leverage agile frameworks to provide a robust synapsis for strategy and collaborative thinking to further the overall value proposition.</p>
+        <div class="stars">★★★★★</div>
+      </article>
+
+      <article class="t-card" style="background:var(--brand-orange);color:#fff">
+        <div class="t-head">
+          <img src="images/ava-2.jpg" alt="Mashal Aljaberi">
+          <div><div class="t-name" style="color:#fff">Mashal Aljaberi</div><div class="t-role" style="color:#ffeedd">Graphic Designer</div></div>
+        </div>
+        <p style="color:#fff">Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
+        <div class="stars">★★★★★</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section contact">
+  <div class="container grid">
+    <div>
+      <h3>Get in touch with us</h3>
+      <p>Ready to streamline your shipping operations? Contact us today to discuss your needs and discover how Manaf Shipping Services can elevate your cargo transportation experience.</p>
+      <div class="info">
+        <div class="row"><div class="dot">✉️</div><div><strong>Email</strong><br><a href="mailto:cmgroup@manaflogistics.com" style="color:#cdd6e6;text-decoration:none">cmgroup@manaflogistics.com</a></div></div>
+        <div class="row"><div class="dot">📞</div><div><strong>Call Us</strong><br><a href="tel:+966551282248" style="color:#cdd6e6;text-decoration:none">+966 55 128 2248</a></div></div>
+        <div class="row"><div class="dot">📍</div><div><strong>Saudi Arabia, Riyadh</strong></div></div>
+      </div>
+    </div>
+
+    <form class="form" onsubmit="event.preventDefault(); alert('Message submitted! (demo)');">
+      <div class="two">
+        <input class="input" type="text" placeholder="Your name*" required>
+        <input class="input" type="email" placeholder="Email*" required>
+      </div>
+      <div class="two">
+        <input class="input" type="tel" placeholder="Phone Number*">
+        <input class="input" type="text" placeholder="City*">
+      </div>
+      <textarea class="textarea" placeholder="Your Message"></textarea>
+      <button class="btn btn-primary" type="submit">Submit Message</button>
+    </form>
+  </div>
+
+  <div class="container" style="margin-top:40px">
+  <div class="gallery">
+    <img src="images/Boxs.jpg" alt="Plane" />
+    <img src="images/Photo-1.jpg" alt="City" />
+    <img src="images/Riyadh_Skyline.jpg" alt="Port" />
+    <img src="images/Photo.jpg" alt="Warehouse" />
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="footer-hero"><div class="container"><h2>Let's ship Together</h2></div></div>
+  <div class="footer-main">
+    <div class="container f-grid">
+      <div class="f-col">
+        <img src="images/Manaf-Logo.png" alt="Manaf Logistic" style="height:40px">
+        <p style="margin-top:10px">Manaf Logistic | Let’s ship</p>
+        <div class="info" style="margin-top:10px">
+          <div class="row"><div class="dot">✉️</div><div>cmgroup@manaflogistics.com</div></div>
+          <div class="row"><div class="dot">📞</div><div>+966 55 128 2248</div></div>
+        </div>
+      </div>
+      <div class="f-col">
+        <h4>Pages</h4>
+        <a href="#about">About Us</a>
+        <a href="#services">Our Services</a>
+        <a href="#why">Why Choose Us</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="f-col">
+        <h4>Utility</h4>
+        <a href="#">Style Guide</a>
+        <a href="#">Changelog</a>
+        <a href="#">Licenses</a>
+        <a href="#">Protected</a>
+        <a href="#">Not Found</a>
+      </div>
+      <div class="f-col f-subscribe">
+        <h4>Subscribe</h4>
+        <input type="email" placeholder="Email here*">
+        <a href="#" class="btn btn-primary">Send Now</a>
+        <div style="margin-top:10px; display:flex; gap:10px">
+          <a href="#" aria-label="Twitter" style="color:#cdd6e6">𝕏</a>
+          <a href="#" aria-label="LinkedIn" style="color:#cdd6e6">in</a>
+          <a href="#" aria-label="Facebook" style="color:#cdd6e6">f</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="f-bottom"><div class="container">Copyright © Manaf Logistic | Designed by Mashal Aljaberi</div></div>
+</footer>
+
+<script>
+/* Mobile menu toggle */
+const burger = document.getElementById('burgerBtn');
+const menu = document.getElementById('primaryMenu');
+burger?.addEventListener('click', ()=> menu.classList.toggle('open'));
+menu?.querySelectorAll('a').forEach(a => a.addEventListener('click', ()=> menu.classList.remove('open')));
+
+/* Active link on scroll */
+const links = [...document.querySelectorAll('#primaryMenu a')];
+const byHash = Object.fromEntries(links.map(a => [a.getAttribute('href'), a]));
+const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+const obs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.classList.remove('active'));
+      const hash = '#' + e.target.id;
+      byHash[hash]?.classList.add('active');
+    }
+  });
+},{rootMargin:'-45% 0px -45% 0px', threshold:0});
+sections.forEach(s=>obs.observe(s));
+
+/* Offset for fixed header */
+function offsetAnchor(){
+  if(location.hash.length>1){
+    const el = document.querySelector(location.hash);
+    if(el){
+      const y = el.getBoundingClientRect().top + window.scrollY - 72;
+      window.scrollTo({top:y, behavior:'smooth'});
+    }
+  }
+}
+window.addEventListener('hashchange', offsetAnchor);
+</script>
+
+</body>
+</html>
