@@ -429,18 +429,26 @@ footer{
       </div>
     </div>
 
-    <form class="form" onsubmit="event.preventDefault(); alert('Message submitted! (demo)');">
-      <div class="two">
-        <input class="input" type="text" placeholder="Your name*" required>
-        <input class="input" type="email" placeholder="Email*" required>
-      </div>
-      <div class="two">
-        <input class="input" type="tel" placeholder="Phone Number*">
-        <input class="input" type="text" placeholder="City*">
-      </div>
-      <textarea class="textarea" placeholder="Your Message"></textarea>
-      <button class="btn btn-primary" type="submit">Submit Message</button>
-    </form>
+   <form class="form" action="https://formsubmit.co/oprmgr@manaflogistics.com" method="POST">
+  <!-- إعدادات خفية -->
+  <input type="hidden" name="_subject" value="New message from Manaf Logistics">
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_template" value="table">
+  <!-- بعد الإرسال يرجّعك لصفحة شكراً (اختياري) -->
+  <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html">
+
+  <div class="two">
+    <input class="input" type="text" name="name" placeholder="Your name*" required>
+    <input class="input" type="email" name="email" placeholder="Email*" required>
+  </div>
+  <div class="two">
+    <input class="input" type="tel" name="phone" placeholder="Phone Number*">
+    <input class="input" type="text" name="city" placeholder="City*">
+  </div>
+  <textarea class="textarea" name="message" placeholder="Your Message" required></textarea>
+  <button class="btn btn-primary" type="submit">Submit Message</button>
+</form>
+
   </div>
 
   <div class="container" style="margin-top:40px">
@@ -535,4 +543,5 @@ window.addEventListener('hashchange', offsetAnchor);
 
 </body>
 </html>
+
 
